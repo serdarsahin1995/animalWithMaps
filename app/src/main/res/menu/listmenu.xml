@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:title="İlanlarım"
+        android:icon="@drawable/ic_baseline_person_outline_24"
+        android:id="@+id/ilan"
+        app:showAsAction="always"
+        />
+    <item
+        android:title="Kısıtlama"
+        android:icon="@drawable/ic_baseline_format_list_bulleted_24"
+        android:id="@+id/kisitlama"
+        app:showAsAction="always"
+        />
+    <item
+        android:title="Arama"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:id="@+id/arama"
+        app:showAsAction="always"
+        app:actionViewClass="android.widget.SearchView" />
+
+</menu>

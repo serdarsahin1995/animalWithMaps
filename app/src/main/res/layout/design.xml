@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/gonder"
+    android:layout_width="wrap_content"
+    android:layout_height="150dp"
+    android:background="@drawable/container_bg"
+    android:backgroundTint="@color/ligh_medium_gray"
+    app:cardBackgroundColor="@color/ligh_medium_gray"
+    app:cardCornerRadius="15dp"
+    app:cardUseCompatPadding="true"
+    android:clickable="true"
+    android:focusable="true">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:padding="5dp">
+
+        <ImageView
+            android:id="@+id/img1"
+            android:layout_width="93.5dp"
+            android:layout_height="125dp" />
+
+        <TextView
+            android:id="@+id/textV"
+            android:layout_width="237dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/img1"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="This is demo"
+            android:textColor="#000"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/detailV"
+            android:layout_width="236dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textV"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="4dp"
+            android:layout_toRightOf="@id/img1"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="This is demo"
+            android:textColor="#000"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/konum1V"
+            android:layout_width="236dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/detailV"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="4dp"
+            android:layout_toRightOf="@id/img1"
+            android:text="This is demo"
+            android:textColor="#000"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/konum2V"
+            android:layout_width="236dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/konum1V"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="4dp"
+            android:layout_toRightOf="@id/img1"
+            android:text="This is demo"
+            android:textColor="#000"
+            android:textSize="13dp" />
+
+        <ImageView
+            android:id="@+id/gomap"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="340dp"
+            app:srcCompat="@drawable/ic_baseline_location_on_24"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"/>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
+

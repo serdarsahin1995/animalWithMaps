@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "663997322796",
+    "firebase_url": "https://petswithmaps.firebaseio.com",
+    "project_id": "petswithmaps",
+    "storage_bucket": "petswithmaps.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:663997322796:android:f01fd64fd0cdc8a9ad6389",
+        "android_client_info": {
+          "package_name": "com.example.petswithmaps"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "663997322796-vm7hn8uck5dfpjpqum26h6vnmirarqia.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5m6o8H0y-P3ZrMFGzqxiSU44zWOVey2w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "663997322796-vm7hn8uck5dfpjpqum26h6vnmirarqia.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
