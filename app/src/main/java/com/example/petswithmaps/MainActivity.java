@@ -13,7 +13,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.example.petswithmaps.Fragments.FourthFragment;
+import com.example.petswithmaps.Fragments.NotificationFragment;
 import com.example.petswithmaps.Fragments.MapFragment;
 import com.example.petswithmaps.Fragments.ListFragment;
 import com.example.petswithmaps.Fragments.ProfilFragment;
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment = new ProfilFragment();
                     break;
                 case R.id.fourthFragment:
-                    selectedFragment=new FourthFragment();
+                    selectedFragment=new NotificationFragment();
                     break;
 
             }

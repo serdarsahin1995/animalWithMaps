@@ -127,15 +127,17 @@ public class FcmUtil {
 
     }
 
-    public void sendNotificationCommon(final Context context, final String title, final String message, List<String> adresList) {
-        uniqueStrings = new LinkedHashSet<String>();
-        uniqueStrings.addAll(adresList);
-        adresList = new ArrayList<>(uniqueStrings);
-        System.out.println(adresList + "la");
-        System.out.println("bura2");
+    public void sendNotificationCommon(final Context context, final String title, final String message, List<String> adresList,String konum1,String konum2) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference reference = database.getReference("users");
         for (int i = 0; i <= adresList.size()-1; i++) {
             DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
             DatabaseReference databaseReference = rootRef.child("users").child(adresList.get(i));
+            DatabaseReference databaseReference2 = rootRef.child("users").child(adresList.get(i)).child("bildirim").push();
+            databaseReference2.child("title").setValue(title);
+            databaseReference2.child("message").setValue(message);
+            databaseReference2.child("konum1").setValue(konum1);
+            databaseReference2.child("konum2").setValue(konum2);
             databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -157,7 +159,6 @@ public class FcmUtil {
                         Response.Listener successListener = new Response.Listener() {
                             @Override
                             public void onResponse(Object response) {
-                                Toast.makeText(context, "Notification Sent", Toast.LENGTH_SHORT).show();
                             }
                         };
 

@@ -110,7 +110,6 @@ public class MapFromActivity extends AppCompatActivity {
                             System.out.println("kendisi");
                         } else {
                             senduid.add(d.getKey());
-                            Log.d("serdar", d.getKey());
                         }
 
 
@@ -144,7 +143,7 @@ public class MapFromActivity extends AppCompatActivity {
                 MapFragment.fa.getActivity().finish();
                 Intent intent = new Intent(MapFromActivity.this, MainActivity.class);
                 FcmUtil fcmUtil = new FcmUtil();
-                fcmUtil.sendNotificationCommon(MapFromActivity.this, "Selam", "Çevrenizde yeni bir duyuru var!", senduid);
+                fcmUtil.sendNotificationCommon(MapFromActivity.this, "Selam", "Çevrenizde yeni bir duyuru var!", senduid,konum1,konum2);
                 startActivity(intent);
                 finish();
 
@@ -262,7 +261,7 @@ public class MapFromActivity extends AppCompatActivity {
                                     public void onSuccess(Void aVoid) {
                                         reference.setValue(konumModelD);
                                         FcmUtil fcmUtil = new FcmUtil();
-                                        fcmUtil.sendNotificationCommon(MapFromActivity.this, "Selam", "Çevrenizde yeni bir duyuru var!", senduid);
+                                        fcmUtil.sendNotificationCommon(MapFromActivity.this, "Selam", "Çevrenizde yeni bir duyuru var!", senduid,konum1,konum2);
                                         MapFragment.fa.getActivity().finish();
                                         finish();
                                     }
