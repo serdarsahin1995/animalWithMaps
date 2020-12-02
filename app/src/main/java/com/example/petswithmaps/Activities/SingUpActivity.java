@@ -3,10 +3,12 @@ package com.example.petswithmaps.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -19,11 +21,13 @@ import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.petswithmaps.FcmUtil;
+import com.example.petswithmaps.MainActivity;
 import com.example.petswithmaps.Models.RegisterModel;
 import com.example.petswithmaps.R;
 import com.google.android.gms.maps.CameraUpdate;
@@ -49,6 +53,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class SingUpActivity extends AppCompatActivity {
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     Button Sing_btn;
     TextView logoText, callSingIn, sloganText, adres;
     TextInputLayout username, passwordG, emailG;
@@ -58,6 +63,7 @@ public class SingUpActivity extends AppCompatActivity {
     String userName;
     String userMail;
     String userPassword;
+    ImageView imageView;
     String random = "https://firebasestorage.googleapis.com/v0/b/todoandroid-b0acf.appspot.com/o/image%2F002dc8f6-1ab3-4c46-b229-e6f936843745?alt=media&token=a2e0618f-b1b4-442d-8d5e-21f871b7fa47";
     public static Activity registerdur;
     LatLng latlng;
@@ -65,7 +71,7 @@ public class SingUpActivity extends AppCompatActivity {
     String city = "unknown";
     List<Address> addresses;
     CheckBox checkBox;
-    TextInputEditText password, editText,name;
+    TextInputEditText password, editText, name;
     int count = 0;
     String address, state;
 
@@ -88,9 +94,10 @@ public class SingUpActivity extends AppCompatActivity {
         load = findViewById(R.id.progressBar5);
         password = (TextInputEditText) findViewById(R.id.password2);
         editText = (TextInputEditText) findViewById(R.id.editText);
-        name =(TextInputEditText) findViewById(R.id.name2);
+        name = (TextInputEditText) findViewById(R.id.name2);
+        imageView = findViewById(R.id.support);
         Sing_btn.setEnabled(false);
-        checkBox =findViewById(R.id.checkBox);
+        checkBox = findViewById(R.id.checkBox);
         registerdur = this;
         Sing_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +110,21 @@ public class SingUpActivity extends AppCompatActivity {
                 System.out.println(userMail);
             }
         });
-
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog dialog = new AlertDialog.Builder(SingUpActivity.this).setTitle("Bilgilendirme").setMessage("Bu butona tıkladığınızda sizden konum bilgileriniz için izin ister, onaylarsanız otomatik olarak konumnuz belirlenir. Bu özellik isteğe bağlı olup amacı ilçenizdeki duyuruları size bildirmektir.").
+                        setPositiveButton("İzin iste", null).setNegativeButton("reddet", null).show();
+                Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                positiveButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        askCameraPermissions();
+                        dialog.dismiss();
+                    }
+                });
+            }
+        });
         callSingIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,6 +152,8 @@ public class SingUpActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                askCameraPermissions();
+                imageView.setVisibility(View.INVISIBLE);
                 load.setVisibility(View.VISIBLE);
                 supportMapFragment.getMapAsync(new OnMapReadyCallback() {
                     @Override
@@ -183,6 +206,7 @@ public class SingUpActivity extends AppCompatActivity {
         name.addTextChangedListener(new SingUpActivity.ValidationTextWatcher(name));
     }
 
+
     public void signUpFirabase(String userEmail, String userPassword) {
         progressBar.setVisibility(View.VISIBLE);
         auth.createUserWithEmailAndPassword(userEmail, userPassword).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -206,6 +230,50 @@ public class SingUpActivity extends AppCompatActivity {
 
     }
 
+    private boolean askCameraPermissions() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                ActivityCompat.requestPermissions(SingUpActivity.this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_LOCATION: {
+                load.setVisibility(View.INVISIBLE);
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    if (ContextCompat.checkSelfPermission(this,
+                            Manifest.permission.ACCESS_FINE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED) {
+                    }
+
+                } else {
+                }
+                return;
+            }
+
+        }
+
+    }
 
     public class ValidationTextWatcher implements TextWatcher {
         public ValidationTextWatcher(TextInputEditText password) {
@@ -218,15 +286,36 @@ public class SingUpActivity extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            String name1=  name.getText().toString();
+            String name1 = name.getText().toString();
             String email = editText.getText().toString();
             String multi = password.getText().toString();
-            Sing_btn.setEnabled(!email.isEmpty() && !multi.isEmpty()&&multi.length()>5 && !name1.isEmpty());
+            Sing_btn.setEnabled(!email.isEmpty() && !multi.isEmpty() && multi.length() > 5 && !name1.isEmpty());
         }
 
         @Override
         public void afterTextChanged(Editable s) {
 
         }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+        }
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+        }
+
     }
 }

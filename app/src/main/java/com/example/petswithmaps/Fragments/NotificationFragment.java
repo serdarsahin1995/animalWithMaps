@@ -37,7 +37,6 @@ public class NotificationFragment extends ListFragment implements AdapterView.On
     DatabaseReference databaseReference;
     List<String> title_list,item_list;
     ArrayList<FcmModel> itemlist= new ArrayList<>();
-
     public NotificationFragment() {
         // Required empty public constructor
     }
@@ -46,6 +45,7 @@ public class NotificationFragment extends ListFragment implements AdapterView.On
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -53,6 +53,8 @@ public class NotificationFragment extends ListFragment implements AdapterView.On
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_fourth, container, false);
+
+
         return view;
     }
 
@@ -60,6 +62,7 @@ public class NotificationFragment extends ListFragment implements AdapterView.On
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         title_list=new ArrayList<>();
+
         item_list=new ArrayList<>();
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
@@ -99,6 +102,8 @@ public class NotificationFragment extends ListFragment implements AdapterView.On
             System.out.println(position);
             sublistviewList=itemlist.get(position);
         }
+        BottomNavigationView mBottomNavigationView = getActivity().findViewById(R.id.bottomNavigationview);
+        mBottomNavigationView.setSelectedItemId(R.id.secondFragment);
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_layout, new MapFragment(sublistviewList.getKonum1(), sublistviewList.getKonum2())).commit();

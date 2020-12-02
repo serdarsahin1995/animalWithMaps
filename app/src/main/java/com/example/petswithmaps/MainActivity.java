@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         checkLocationPermission();
         BottomNavigationView btnNav = findViewById(R.id.bottomNavigationview);
         btnNav.setOnNavigationItemSelectedListener(navlistener);
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(InstanceIdResult instanceIdResult) {
                 FcmUtil fcmUtil = new FcmUtil();
-                fcmUtil.updateDeviceToken(MainActivity.this, instanceIdResult.getToken() );
+                fcmUtil.updateDeviceToken(MainActivity.this, instanceIdResult.getToken());
             }
         });
         dur = this;
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment = new ProfilFragment();
                     break;
                 case R.id.fourthFragment:
-                    selectedFragment=new NotificationFragment();
+                    selectedFragment = new NotificationFragment();
                     break;
 
             }
@@ -104,12 +104,10 @@ public class MainActivity extends AppCompatActivity {
                             Manifest.permission.ACCESS_FINE_LOCATION)
                             == PackageManager.PERMISSION_GRANTED) {
                     }
-
                 } else {
                 }
                 return;
             }
-
         }
 
     }

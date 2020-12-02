@@ -21,6 +21,7 @@ import com.example.petswithmaps.Models.KonumModel;
 import com.example.petswithmaps.PicassoTmp.RoundedCornersTransformation;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -30,7 +31,8 @@ import com.squareup.picasso.Transformation;
 public class MyAdapter extends FirebaseRecyclerAdapter<KonumModel, MyAdapter.myviewholder> {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     FirebaseAuth auth = FirebaseAuth.getInstance();
-    boolean durum=false;
+    boolean durum = false;
+
     public MyAdapter(@NonNull FirebaseRecyclerOptions<KonumModel> options) {
         super(options);
     }
@@ -43,11 +45,6 @@ public class MyAdapter extends FirebaseRecyclerAdapter<KonumModel, MyAdapter.myv
         holder.detail.setText(konumModel.getDetail());
         holder.konum1.setText(konumModel.getAdres1());
         holder.konum2.setText(konumModel.getAdres2());
-
-        DatabaseReference reference = database.getReference("konumlar").child(konumModel.getKey());
-        DatabaseReference reference2 = database.getReference("users").child(auth.getCurrentUser().getUid()).child("konumlar").child(konumModel.getKey());
-
-
         final Transformation transformation = new RoundedCornersTransformation(radius, margin);
         Picasso.get().load(konumModel.getResim()).transform(transformation).placeholder(R.drawable.progress_animation).into(holder.img1);
 
@@ -65,7 +62,10 @@ public class MyAdapter extends FirebaseRecyclerAdapter<KonumModel, MyAdapter.myv
             @Override
             public void onClick(View v) {
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                BottomNavigationView mBottomNavigationView = activity.findViewById(R.id.bottomNavigationview);
+                mBottomNavigationView.setSelectedItemId(R.id.secondFragment);
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, new MapFragment(konumModel.getKonum1(), konumModel.getKonum2())).commit();
+
             }
         });
 
