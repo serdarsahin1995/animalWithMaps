@@ -29,9 +29,6 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
 public class MyAdapter extends FirebaseRecyclerAdapter<KonumModel, MyAdapter.myviewholder> {
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    FirebaseAuth auth = FirebaseAuth.getInstance();
-    boolean durum = false;
 
     public MyAdapter(@NonNull FirebaseRecyclerOptions<KonumModel> options) {
         super(options);
@@ -39,8 +36,7 @@ public class MyAdapter extends FirebaseRecyclerAdapter<KonumModel, MyAdapter.myv
 
     @Override
     protected void onBindViewHolder(@NonNull myviewholder holder, int i, @NonNull KonumModel konumModel) {
-        final int radius = 6;
-        final int margin = 6;
+        final int radius = 6,margin = 6;
         holder.text.setText(konumModel.getText());
         holder.detail.setText(konumModel.getDetail());
         holder.konum1.setText(konumModel.getAdres1());

@@ -26,18 +26,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.petswithmaps.FcmUtil;
-import com.example.petswithmaps.MainActivity;
 import com.example.petswithmaps.Models.RegisterModel;
 import com.example.petswithmaps.R;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -45,8 +40,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 
 import java.io.IOException;
 import java.util.List;
@@ -60,20 +53,17 @@ public class SingUpActivity extends AppCompatActivity {
     ProgressBar progressBar, load;
     FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    String userName;
-    String userMail;
-    String userPassword;
+    String userName, userMail, userPassword,
+            random = "https://firebasestorage.googleapis.com/v0/b/todoandroid-b0acf.appspot.com/o/image%2F002dc8f6-1ab3-4c46-b229-e6f936843745?alt=media&token=a2e0618f-b1b4-442d-8d5e-21f871b7fa47", city = "Bilinmeyen";
     ImageView imageView;
-    String random = "https://firebasestorage.googleapis.com/v0/b/todoandroid-b0acf.appspot.com/o/image%2F002dc8f6-1ab3-4c46-b229-e6f936843745?alt=media&token=a2e0618f-b1b4-442d-8d5e-21f871b7fa47";
     public static Activity registerdur;
     LatLng latlng;
     Geocoder geocoder;
-    String city = "unknown";
     List<Address> addresses;
     CheckBox checkBox;
+    DatabaseReference reference = database.getReference("users").child(auth.getCurrentUser().getUid());
     TextInputEditText password, editText, name;
     int count = 0;
-    String address, state;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +85,7 @@ public class SingUpActivity extends AppCompatActivity {
         password = (TextInputEditText) findViewById(R.id.password2);
         editText = (TextInputEditText) findViewById(R.id.editText);
         name = (TextInputEditText) findViewById(R.id.name2);
-        imageView = findViewById(R.id.support);
+        imageView = findViewById(R.id.reflesh);
         Sing_btn.setEnabled(false);
         checkBox = findViewById(R.id.checkBox);
         registerdur = this;

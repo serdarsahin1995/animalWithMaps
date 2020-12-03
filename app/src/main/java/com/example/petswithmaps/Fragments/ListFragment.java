@@ -69,7 +69,6 @@ public class ListFragment extends Fragment {
     FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseUser user = auth.getCurrentUser();
     boolean gecis, gecis2, degis = false;
-    boolean durum = true;
     Spinner spinner;
     LinkedHashSet<String> uniqueStrings;
     String uid;

@@ -41,16 +41,14 @@ import com.squareup.picasso.Transformation;
 public class MapDetailFragment extends Fragment {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference reference,reference2;
-    String baslık, resim, acıklama, uid, key;
+    String baslık, resim, acıklama, uid, key,url,email;
     PhotoView imageView;
     EditText detail;
     FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseUser user = auth.getCurrentUser();
     ImageView profilFoto;
     TextView profilText;
-    String url,email;
-    final int radius = 50;
-    final int margin = 50;
+    final int radius = 50,margin = 50;
     Context context;
     Button button;
     final Transformation transformation = new RoundedCornersTransformation(radius, margin);
