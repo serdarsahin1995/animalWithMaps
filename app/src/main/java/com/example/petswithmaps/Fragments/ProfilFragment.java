@@ -1,39 +1,28 @@
 package com.example.petswithmaps.Fragments;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.petswithmaps.Activities.LoginActivity;
-import com.example.petswithmaps.Activities.MapFromActivity;
 import com.example.petswithmaps.PicassoTmp.CircleTransform;
 import com.example.petswithmaps.PicassoTmp.RoundedCornersTransformation;
-import com.example.petswithmaps.ProfilEditActivity;
+import com.example.petswithmaps.Activities.ProfilEditActivity;
 import com.example.petswithmaps.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -42,12 +31,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
-
-import java.io.ByteArrayOutputStream;
-import java.util.UUID;
 
 
 public class ProfilFragment extends Fragment {

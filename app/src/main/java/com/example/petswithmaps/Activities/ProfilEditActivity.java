@@ -1,4 +1,4 @@
-package com.example.petswithmaps;
+package com.example.petswithmaps.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.petswithmaps.PicassoTmp.CircleTransform;
+import com.example.petswithmaps.R;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
