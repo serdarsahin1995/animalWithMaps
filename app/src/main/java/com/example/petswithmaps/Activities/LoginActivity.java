@@ -69,12 +69,11 @@ public class LoginActivity extends AppCompatActivity {
         else if(!gece.equals("a")){
             b = Integer.parseInt(gece);
         }else if(gunduz.equals("b")&&gece.equals("a")){
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         }
         if(b==1){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }else if(a==2){
-            System.out.println("lann");
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
         progressBar = findViewById(R.id.progressBar2);
