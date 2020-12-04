@@ -5,7 +5,6 @@
     android:id="@+id/cons"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ligh_medium_gray"
     tools:context=".Fragments.ProfileDetailFragment">
 
     <TextView
@@ -13,7 +12,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="51dp"
-        android:text="TextView"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,9 +23,9 @@
         android:layout_height="30dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
         android:src="@drawable/ic_baseline_clear_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:clickable="true"/>
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
     android:orientation="vertical"
     tools:context=".Activities.SingUpActivity">
 
@@ -14,7 +13,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:text="Hoşgeldiniz,"
-        android:textColor="#000000"
         android:textSize="35sp"
         android:textStyle="bold|italic"
         android:transitionName="logo_text"
@@ -133,7 +131,6 @@
         android:clickable="true"
         android:gravity="center_horizontal"
         android:text="Giriş Safyası"
-        android:textColor="#000000"
         android:textSize="18sp"
         android:transitionName="login_singup_tran"
         app:layout_constraintEnd_toEndOf="parent"
@@ -160,7 +157,6 @@
         android:clickable="true"
         android:gravity="center_horizontal"
         android:text="Konum Belirle"
-        android:textColor="#000000"
         android:textSize="18sp"
         android:transitionName="login_singup_tran"
         app:layout_constraintEnd_toEndOf="parent"

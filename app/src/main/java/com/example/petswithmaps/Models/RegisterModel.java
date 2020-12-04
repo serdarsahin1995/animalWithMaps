@@ -1,10 +1,7 @@
 package com.example.petswithmaps.Models;
 
 public class RegisterModel {
-    String name;
-    String email;
-    String photo;
-    String adres;
+    String name,email,photo,adres;
     public RegisterModel(String name, String email, String photo,String adres) {
         this.name = name;
         this.email = email;

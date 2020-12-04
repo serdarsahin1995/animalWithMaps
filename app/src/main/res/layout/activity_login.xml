@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:text="Tekrar Hoşgeldiniz,"
-        android:textColor="#000000"
         android:textSize="35sp"
         android:textStyle="bold|italic"
         android:transitionName="logo_text"
@@ -97,7 +96,6 @@
         android:layout_marginTop="15dp"
         android:gravity="center_horizontal"
         android:text="Yeni Üyelik Oluştur"
-        android:textColor="#000000"
         android:textSize="18sp"
         android:transitionName="login_singup_tran"
         app:layout_constraintEnd_toEndOf="parent"
@@ -111,7 +109,6 @@
         android:layout_marginTop="10dp"
         android:gravity="center_horizontal"
         android:text="Şifrenimi Unuttun?"
-        android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/textView5"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />

@@ -182,8 +182,6 @@ resim.setOnClickListener(new View.OnClickListener() {
                                                                     }
                                                                 }
                         );
-
-
                     }
                 });
             }
@@ -200,7 +198,6 @@ resim.setOnClickListener(new View.OnClickListener() {
         }
         return super.onOptionsItemSelected(item);
     }
-
     public class ValidationTextWatcher implements TextWatcher {
         public ValidationTextWatcher(TextInputEditText password) {
         }

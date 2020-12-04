@@ -9,10 +9,7 @@ public class FcmModel {
     public static final String CHANNEL_ID = "animal_With_Map";
     public static final String CHANNEL_NAME ="animalWithMap";
     public static final String CHANNEL_DESC ="animal With Map";
-    String title;
-    String message;
-    String konum1;
-    String konum2;
+    String title,message,konum1,konum2;
     public FcmModel(String title, String message,String konum1,String konum2) {
         this.title = title;
         this.message = message;

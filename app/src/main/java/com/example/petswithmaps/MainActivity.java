@@ -9,10 +9,14 @@ import androidx.fragment.app.Fragment;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.example.petswithmaps.Activities.LoginActivity;
 import com.example.petswithmaps.Fragments.NotificationFragment;
 import com.example.petswithmaps.Fragments.MapFragment;
 import com.example.petswithmaps.Fragments.ListFragment;
@@ -25,13 +29,28 @@ import com.google.firebase.iid.InstanceIdResult;
 public class MainActivity extends AppCompatActivity {
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     public static Activity dur;
+    int b,a;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        SharedPreferences sp= getApplicationContext().getSharedPreferences("User", Context.MODE_PRIVATE);
+        String gece = sp.getString("gece","a");
+        String gunduz = sp.getString("gunduz","b");
+        if(!gunduz.equals("b")){
+            a = Integer.parseInt(gunduz);
+        }
+        else if(!gece.equals("a")){
+            b = Integer.parseInt(gece);
+        }
+        if(b==1){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }else if(a==2){
+            System.out.println("lann");
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
         checkLocationPermission();
         BottomNavigationView btnNav = findViewById(R.id.bottomNavigationview);
         btnNav.setOnNavigationItemSelectedListener(navlistener);
@@ -111,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
     @Override
     protected void onResume() {
         super.onResume();

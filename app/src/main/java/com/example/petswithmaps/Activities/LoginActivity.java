@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -44,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     DatabaseReference reference2;
     TextInputEditText password, editText;
     FirebaseUser user = auth.getCurrentUser();
+    int b,a;
     public static Activity singdur;
     String emailG;
 
@@ -51,13 +54,29 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         callSingUp = findViewById(R.id.textView5);
         logoText = findViewById(R.id.textView);
         sloganText = findViewById(R.id.textView3);
         email = findViewById(R.id.name);
         pass = findViewById(R.id.password);
         login_btn = findViewById(R.id.buttonSing);
+        SharedPreferences sp= getApplicationContext().getSharedPreferences("User", Context.MODE_PRIVATE);
+        String gece = sp.getString("gece","a");
+        String gunduz = sp.getString("gunduz","b");
+        if(!gunduz.equals("b")){
+            a = Integer.parseInt(gunduz);
+        }
+        else if(!gece.equals("a")){
+            b = Integer.parseInt(gece);
+        }else if(gunduz.equals("b")&&gece.equals("a")){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+        if(b==1){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }else if(a==2){
+            System.out.println("lann");
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
         progressBar = findViewById(R.id.progressBar2);
         password = (TextInputEditText) findViewById(R.id.password2);
         editText = (TextInputEditText) findViewById(R.id.editText);

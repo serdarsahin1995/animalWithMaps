@@ -3,9 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:title="Çıkış Yap"
+        android:icon="@drawable/ic_baseline_brightness_6_24"
+        android:id="@+id/degis"
+        app:showAsAction="always"
+        />
+    <item
+        android:title="Çıkış Yap"
         android:icon="@drawable/ic_baseline_exit_to_app_24"
         android:id="@+id/cikis"
         app:showAsAction="always"
          />
+
 
 </menu>

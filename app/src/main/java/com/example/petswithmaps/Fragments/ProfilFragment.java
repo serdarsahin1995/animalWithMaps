@@ -1,11 +1,15 @@
 package com.example.petswithmaps.Fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -23,6 +27,7 @@ import com.example.petswithmaps.PicassoTmp.CircleTransform;
 import com.example.petswithmaps.PicassoTmp.RoundedCornersTransformation;
 import com.example.petswithmaps.Activities.ProfilEditActivity;
 import com.example.petswithmaps.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,6 +48,7 @@ public class ProfilFragment extends Fragment {
     TextView name, email;
     ImageView resim;
     Bitmap image;
+    SharedPreferences sp;
     FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     StorageReference storageReference;
@@ -57,11 +63,10 @@ public class ProfilFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-
+        sp=getActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
         super.onCreate(savedInstanceState);
 
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -69,6 +74,7 @@ public class ProfilFragment extends Fragment {
         resim = view.findViewById(R.id.user_imageview);
         storageReference = FirebaseStorage.getInstance().getReference();
         name = view.findViewById(R.id.name_textview);
+
         button = view.findViewById(R.id.button4);
         getActivity().setTitle("Profil");
         button.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +118,28 @@ public class ProfilFragment extends Fragment {
             Intent i = new Intent(getActivity(), LoginActivity.class);
             startActivity(i);
             getActivity().finish();
+        }
+        if(id == R.id.degis){
+            SharedPreferences.Editor editor;
+            BottomNavigationView mBottomNavigationView = getActivity().findViewById(R.id.bottomNavigationview);
+            editor= sp.edit();
+            int nightModeFlags =
+                    getContext().getResources().getConfiguration().uiMode &
+                            Configuration.UI_MODE_NIGHT_MASK;
+            switch (nightModeFlags) {
+                case Configuration.UI_MODE_NIGHT_YES:
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    editor.putString("gece","1");
+                    sp.edit().remove("gunduz").apply();
+                    break;
+                case Configuration.UI_MODE_NIGHT_NO:
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    editor.putString("gunduz","2");
+                    sp.edit().remove("gece").apply();
+                    break;
+            }
+            editor.apply();
+            mBottomNavigationView.setSelectedItemId(R.id.fisrtFragment);
         }
         return super.onOptionsItemSelected(item);
     }
