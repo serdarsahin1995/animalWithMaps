@@ -70,6 +70,7 @@ public class ProfilFragment extends Fragment {
         storageReference = FirebaseStorage.getInstance().getReference();
         name = view.findViewById(R.id.name_textview);
         button = view.findViewById(R.id.button4);
+        getActivity().setTitle("Profil");
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

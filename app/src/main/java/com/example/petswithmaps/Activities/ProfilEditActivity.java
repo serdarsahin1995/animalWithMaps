@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -82,6 +83,8 @@ public class ProfilEditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil_edit);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Profil Düzenle");
         username = findViewById(R.id.name);
         rehlesh=findViewById(R.id.reflesh);
         passwordG = findViewById(R.id.password);
@@ -186,6 +189,16 @@ resim.setOnClickListener(new View.OnClickListener() {
             }
         });
         editText.addTextChangedListener(new ValidationTextWatcher(editText));
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if(id==android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public class ValidationTextWatcher implements TextWatcher {

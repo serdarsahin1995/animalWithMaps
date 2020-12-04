@@ -53,7 +53,7 @@ public class NotificationFragment extends ListFragment implements AdapterView.On
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_fourth, container, false);
-
+        getActivity().setTitle("Bildirim");
 
         return view;
     }

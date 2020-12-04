@@ -98,6 +98,7 @@ public class MapFragment extends Fragment {
         k2 = new ArrayList<>();
         baslık = new ArrayList<>();
         key = new ArrayList<>();
+        getActivity().setTitle("Harita");
         resim = new ArrayList<>();
         loc1 = new ArrayList<>();
         loc2 = new ArrayList<>();

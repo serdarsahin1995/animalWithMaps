@@ -101,6 +101,7 @@ public class ListFragment extends Fragment {
         supportMapFragment.getView().setVisibility(View.INVISIBLE);
         swipeRefreshLayout = view.findViewById(R.id.swipe_container);
         initializeRefreshListener();
+        getActivity().setTitle("Liste");
         k1 = new ArrayList<>();
         k2 = new ArrayList<>();
         baslık = new ArrayList<>();

@@ -2,6 +2,7 @@ package com.example.petswithmaps.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -40,18 +42,19 @@ import com.squareup.picasso.Transformation;
 
 public class MapDetailFragment extends Fragment {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference reference,reference2;
-    String baslık, resim, acıklama, uid, key,url,email;
+    DatabaseReference reference, reference2;
+    String baslık, resim, acıklama, uid, key, url, email, konum1, konum2;
     PhotoView imageView;
     EditText detail;
     FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseUser user = auth.getCurrentUser();
     ImageView profilFoto;
     TextView profilText;
-    final int radius = 50,margin = 50;
+    final int radius = 50, margin = 50;
     Context context;
-    Button button;
+    ImageView button;
     final Transformation transformation = new RoundedCornersTransformation(radius, margin);
+
     public MapDetailFragment() {
         // Required empty public constructor
     }
@@ -69,13 +72,12 @@ public class MapDetailFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_map_detail, container, false);
         imageView = view.findViewById(R.id.imageView);
-        profilFoto=view.findViewById(R.id.profilFoto);
-        profilText=view.findViewById(R.id.Profiltext);
+        profilFoto = view.findViewById(R.id.profilFoto);
+        profilText = view.findViewById(R.id.Profiltext);
         detail = view.findViewById(R.id.textView7);
         detail.setEnabled(false);
-        context=container.getContext();
-        button=view.findViewById(R.id.button3);
-
+        context = container.getContext();
+        button = view.findViewById(R.id.button3);
         return view;
     }
 
@@ -96,16 +98,21 @@ public class MapDetailFragment extends Fragment {
                                                     resim = snapshot.child("resim").getValue().toString();
                                                     key = snapshot.child("key").getValue().toString();
                                                     uid = snapshot.child("uid").getValue().toString();
+                                                    konum1 = snapshot.child("konum1").getValue().toString();
+                                                    konum2 = snapshot.child("konum2").getValue().toString();
                                                     Picasso.get().load(resim).into(imageView);
                                                     getActivity().setTitle(baslık);
                                                     detail.setText(acıklama);
-                                                    reference2=database.getReference("users").child(uid);
+                                                    if (user.getUid().equals(uid)) {
+                                                        button.setVisibility(View.INVISIBLE);
+                                                    }
+                                                    reference2 = database.getReference("users").child(uid);
                                                     reference2.addValueEventListener(new ValueEventListener() {
                                                         @Override
                                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                                                             url = snapshot.child("photo").getValue().toString();
                                                             profilText.setText(snapshot.child("name").getValue().toString());
-                                                            email=snapshot.child("email").getValue().toString();
+                                                            email = snapshot.child("email").getValue().toString();
                                                             Picasso.get().load(url).transform(new CircleTransform()).into(profilFoto);
                                                         }
 
@@ -128,10 +135,14 @@ public class MapDetailFragment extends Fragment {
                                                     button.setOnClickListener(new View.OnClickListener() {
                                                         @Override
                                                         public void onClick(View v) {
-                                                            String title ="sa";
-                                                            String message="as" + auth.getCurrentUser().getEmail();
+                                                            String title = "sa";
+                                                            String message = "as" + auth.getCurrentUser().getEmail();
                                                             FcmUtil fcmUtil = new FcmUtil();
-                                                            fcmUtil.sendNotification(context, title,message,uid);
+                                                            fcmUtil.sendNotification(context, title, message, uid);
+                                                            String uri = "http://maps.google.com/maps?q=loc:" + konum1 + "," + konum2;
+                                                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                                                            intent.setPackage("com.google.android.apps.maps");
+                                                            startActivity(intent);
                                                         }
                                                     });
                                                 } catch (Exception exception) {
@@ -162,8 +173,9 @@ public class MapDetailFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        System.out.println("lannn");
+        int id = item.getItemId();
         if (uid.equals(user.getUid())) {
-            int id = item.getItemId();
             if (id == R.id.sil) {
                 DatabaseReference reference2 = FirebaseDatabase.getInstance().getReference("konumlar").child(key);
                 DatabaseReference reference3 = FirebaseDatabase.getInstance().getReference("users").child(user.getUid()).child("konumlar").child(key);
@@ -180,6 +192,10 @@ public class MapDetailFragment extends Fragment {
                 startActivity(i);
                 getActivity().finish();
             }
+        }
+        if (id == android.R.id.home) {
+            getActivity().finish();
+            return super.onOptionsItemSelected(item);
         }
 
         return super.onOptionsItemSelected(item);
