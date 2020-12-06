@@ -103,6 +103,7 @@ public class MapFragment extends Fragment {
         loc1 = new ArrayList<>();
         loc2 = new ArrayList<>();
         floatingActionButton = view.findViewById(R.id.floatingActionButton);
+        floatingActionButton.setVisibility(View.INVISIBLE);
         supportMapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
@@ -175,6 +176,7 @@ public class MapFragment extends Fragment {
                             latlng = new LatLng(location.getLatitude(), location.getLongitude());
                             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
                                     latlng, 15);
+                            floatingActionButton.setVisibility(View.VISIBLE);
                             if (konum == false) {
                                 googleMap.animateCamera(cameraUpdate);
                                 konum = true;

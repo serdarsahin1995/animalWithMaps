@@ -6,11 +6,29 @@
         <item name="colorPrimaryVariant">#121212</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
+        <item name="colorSecondary">#008467</item>
+        <item name="colorSecondaryVariant">#008467</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+        <item name="android:editTextColor">#d3d3d3</item>
+        <item name="android:textColor">#d3d3d3</item>
+
+    </style>
+    <style name="Theme.Sing" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">#009b79</item>
+        <item name="colorPrimaryVariant">#121212</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
         <item name="colorSecondary">#2e5bb6</item>
         <item name="colorSecondaryVariant">#2e5bb6</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:editTextColor">#d3d3d3</item>
+        <item name="android:textColor">#d3d3d3</item>
     </style>
 </resources>

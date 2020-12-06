@@ -100,7 +100,9 @@ public class MapDetailFragment extends Fragment {
                                                     uid = snapshot.child("uid").getValue().toString();
                                                     konum1 = snapshot.child("konum1").getValue().toString();
                                                     konum2 = snapshot.child("konum2").getValue().toString();
-                                                    Picasso.get().load(resim).into(imageView);
+
+                                                    Picasso.get().load(resim).placeholder(R.drawable.progress_animation).into(imageView);
+
                                                     getActivity().setTitle(baslık);
                                                     detail.setText(acıklama);
                                                     if (user.getUid().equals(uid)) {
@@ -114,6 +116,7 @@ public class MapDetailFragment extends Fragment {
                                                             profilText.setText(snapshot.child("name").getValue().toString());
                                                             email = snapshot.child("email").getValue().toString();
                                                             Picasso.get().load(url).transform(new CircleTransform()).into(profilFoto);
+
                                                         }
 
                                                         @Override
