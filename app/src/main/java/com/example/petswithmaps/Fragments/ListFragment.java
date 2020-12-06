@@ -337,7 +337,7 @@ public class ListFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
-
+                    duyuru.setText("");
                 }else {
                     duyuru.setText("Duyuru Yok");
                     duyuru.setVisibility(View.VISIBLE);

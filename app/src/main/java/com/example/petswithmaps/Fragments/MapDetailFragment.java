@@ -116,7 +116,6 @@ public class MapDetailFragment extends Fragment {
                                                             profilText.setText(snapshot.child("name").getValue().toString());
                                                             email = snapshot.child("email").getValue().toString();
                                                             Picasso.get().load(url).transform(new CircleTransform()).into(profilFoto);
-
                                                         }
 
                                                         @Override
