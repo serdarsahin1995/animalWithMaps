@@ -125,7 +125,6 @@ public class SingUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SingUpActivity.this, LoginActivity.class);
                 Pair[] pairs = new Pair[6];
-
                 pairs[0] = new Pair<View, String>(logoText, "logo_text");
                 pairs[1] = new Pair<View, String>(sloganText, "logo_desc");
                 pairs[2] = new Pair<View, String>(username, "email_tran");

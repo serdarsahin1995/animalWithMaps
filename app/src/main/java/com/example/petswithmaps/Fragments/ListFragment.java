@@ -25,6 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -72,7 +73,8 @@ public class ListFragment extends Fragment {
     Spinner spinner;
     LinkedHashSet<String> uniqueStrings;
     String uid;
-    ProgressBar progressBar;
+    TextView duyuru;
+    public static ProgressBar progressBar;
 
     public ListFragment() {
 
@@ -104,13 +106,14 @@ public class ListFragment extends Fragment {
         getActivity().setTitle("Liste");
         k1 = new ArrayList<>();
         k2 = new ArrayList<>();
+        duyuru=view.findViewById(R.id.textView8);
         baslık = new ArrayList<>();
         key = new ArrayList<>();
         resim = new ArrayList<>();
         loc1 = new ArrayList<>();
         loc2 = new ArrayList<>();
         sehirtmp = new ArrayList<>();
-        progressBar = view.findViewById(R.id.progressBar4);
+         progressBar = view.findViewById(R.id.progressBar4);
         uniqueStrings = new LinkedHashSet<String>();
         supportMapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
@@ -174,14 +177,27 @@ public class ListFragment extends Fragment {
             }
         });
         recView.setLayoutManager(new LinearLayoutManager(getContext()));
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
 
+                }else {
+                    duyuru.setText("Duyuru Yok");
+                    duyuru.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         FirebaseRecyclerOptions<KonumModel> options =
                 new FirebaseRecyclerOptions.Builder<KonumModel>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("konumlar"), KonumModel.class)
+                        .setQuery(reference, KonumModel.class)
                         .build();
-        if (uid == user.getUid()) {
-
-        }
         adapter = new MyAdapter(options);
         recView.setAdapter(adapter);
         return view;
@@ -317,9 +333,26 @@ public class ListFragment extends Fragment {
     }
 
     public void defaultLocation() {
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+
+                }else {
+                    duyuru.setText("Duyuru Yok");
+                    duyuru.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         FirebaseRecyclerOptions<KonumModel> options =
                 new FirebaseRecyclerOptions.Builder<KonumModel>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("konumlar"), KonumModel.class)
+                        .setQuery(reference, KonumModel.class)
                         .build();
         adapter = new MyAdapter(options);
         adapter.startListening();
@@ -327,9 +360,27 @@ public class ListFragment extends Fragment {
     }
 
     public void customLocation() {
+        DatabaseReference reference2 = database.getReference().child("users").child(auth.getCurrentUser().getUid()).child("konumlar");
+        reference2.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+
+                }else {
+                    duyuru.setText("Duyurunuz Yok");
+                    duyuru.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         FirebaseRecyclerOptions<KonumModel> options =
                 new FirebaseRecyclerOptions.Builder<KonumModel>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("users").child(auth.getCurrentUser().getUid()).child("konumlar"), KonumModel.class)
+                        .setQuery(reference2, KonumModel.class)
                         .build();
         adapter = new MyAdapter(options);
         adapter.startListening();

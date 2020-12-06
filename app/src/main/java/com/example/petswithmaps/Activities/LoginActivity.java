@@ -3,12 +3,16 @@ package com.example.petswithmaps.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -41,9 +45,9 @@ public class LoginActivity extends AppCompatActivity {
     TextView logoText, callSingUp, sloganText;
     TextInputLayout email, pass;
     ProgressBar progressBar;
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     FirebaseAuth auth = FirebaseAuth.getInstance();
-    DatabaseReference reference2;
     TextInputEditText password, editText;
     FirebaseUser user = auth.getCurrentUser();
     int b,a;
@@ -57,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         callSingUp = findViewById(R.id.textView5);
         logoText = findViewById(R.id.textView);
         sloganText = findViewById(R.id.textView3);
+        askCameraPermissions();
         email = findViewById(R.id.name);
         pass = findViewById(R.id.password);
         login_btn = findViewById(R.id.buttonSing);
@@ -80,11 +85,6 @@ public class LoginActivity extends AppCompatActivity {
         password = (TextInputEditText) findViewById(R.id.password2);
         editText = (TextInputEditText) findViewById(R.id.editText);
         login_btn.setEnabled(false);
-        try {
-            reference2 = database.getReference("users").child(auth.getCurrentUser().getUid());
-        }catch (Exception e){
-
-        }
         singdur = this;
 
 
@@ -93,7 +93,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, SingUpActivity.class);
                 Pair[] pairs = new Pair[6];
-
                 pairs[0] = new Pair<View, String>(logoText, "logo_text");
                 pairs[1] = new Pair<View, String>(sloganText, "logo_desc");
                 pairs[2] = new Pair<View, String>(email, "email_tran");
@@ -161,34 +160,54 @@ public class LoginActivity extends AppCompatActivity {
                 });
 
     }
+    private boolean askCameraPermissions() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
 
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                ActivityCompat.requestPermissions(LoginActivity.this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_LOCATION: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    if (ContextCompat.checkSelfPermission(this,
+                            Manifest.permission.ACCESS_FINE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED) {
+                    }
+
+                } else {
+                }
+                return;
+            }
+
+        }
+
+    }
     @Override
     protected void onStart() {
         super.onStart();
         FirebaseUser user = auth.getCurrentUser();
         if (user != null) {
-            try {
-                reference2.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        try {
-                            emailG = snapshot.child("email").getValue().toString();
-                        }catch (Exception e){
-                            FirebaseAuth.getInstance().signOut();
-                            Intent i = new Intent(LoginActivity.this,SingUpActivity.class);
-                            startActivity(i);
-                            finish();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-            }catch (Exception exception){
-
-            }
             Toast.makeText(LoginActivity.this, auth.getCurrentUser().getUid(), Toast.LENGTH_LONG).show();
             Intent i = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(i);

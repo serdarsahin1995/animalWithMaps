@@ -43,7 +43,7 @@ public class MyAdapter extends FirebaseRecyclerAdapter<KonumModel, MyAdapter.myv
         holder.konum2.setText(konumModel.getAdres2());
         final Transformation transformation = new RoundedCornersTransformation(radius, margin);
         Picasso.get().load(konumModel.getResim()).transform(transformation).placeholder(R.drawable.progress_animation).into(holder.img1);
-
+        ListFragment.progressBar.setVisibility(View.INVISIBLE);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

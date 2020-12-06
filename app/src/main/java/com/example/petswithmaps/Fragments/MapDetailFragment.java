@@ -101,7 +101,7 @@ public class MapDetailFragment extends Fragment {
                                                     konum1 = snapshot.child("konum1").getValue().toString();
                                                     konum2 = snapshot.child("konum2").getValue().toString();
 
-                                                    Picasso.get().load(resim).placeholder(R.drawable.progress_animation).into(imageView);
+                                                    Picasso.get().load(resim).into(imageView);
 
                                                     getActivity().setTitle(baslık);
                                                     detail.setText(acıklama);

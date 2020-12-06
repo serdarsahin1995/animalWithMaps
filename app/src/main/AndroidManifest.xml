@@ -47,8 +47,7 @@
             android:name=".Activities.MapTempActivity"
              />
         <activity
-            android:name=".Activities.MapFromActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name=".Activities.MapFromActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
