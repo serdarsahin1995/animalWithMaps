@@ -48,6 +48,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -248,26 +249,25 @@ public class ListFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-
+                newText=newText.toLowerCase();
                 processearch(newText);
+
                 return true;
             }
 
         });
 
     }
-
     private void processearch(String s) {
+        Query ref=FirebaseDatabase.getInstance().getReference().child("konumlar").orderByChild("adres1").startAt(s).endAt(s + "\uf8ff");
         FirebaseRecyclerOptions<KonumModel> options =
                 new FirebaseRecyclerOptions.Builder<KonumModel>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("konumlar").orderByChild("adres1").startAt(s).endAt(s + "\uf8ff"), KonumModel.class)
-                        .build();
-
+                        .setQuery(ref, KonumModel.class).build();
         adapter = new MyAdapter(options);
         adapter.startListening();
         recView.setAdapter(adapter);
-
     }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

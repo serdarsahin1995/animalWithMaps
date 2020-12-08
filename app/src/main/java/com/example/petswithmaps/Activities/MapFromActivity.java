@@ -138,6 +138,9 @@ public class MapFromActivity extends AppCompatActivity {
                 detail = editTextMulti.getText().toString();
                 key = reference2.getKey();
                 DatabaseReference reference = database.getReference("users").child(auth.getCurrentUser().getUid()).child("konumlar").child(key);
+                adres1 = adres1.substring(0, 1).toLowerCase() + adres1.substring(1);
+                city = city.substring(0, 1).toLowerCase() + city.substring(1);
+                sehir = sehir.substring(0, 1).toLowerCase() + sehir.substring(1);
                 KonumModel konumModelD = new KonumModel(konum1, konum2, text, detail, random, key, adres1, adres2, sehir, auth.getCurrentUser().getUid(), false, city);
                 reference2.setValue(konumModelD);
                 reference.setValue(konumModelD);
@@ -252,6 +255,9 @@ public class MapFromActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Uri uri) {
                                 random = String.valueOf(uri);
+                                adres1 = adres1.substring(0, 1).toLowerCase() + adres1.substring(1);
+                                city = city.substring(0, 1).toLowerCase() + city.substring(1);
+                                sehir = sehir.substring(0, 1).toLowerCase() + sehir.substring(1);
                                 System.out.println(random);
                                 Intent intent = new Intent(MapFromActivity.this, MainActivity.class);
                                 DatabaseReference reference = database.getReference("users").child(auth.getCurrentUser().getUid()).child("konumlar").child(key);

@@ -8,11 +8,15 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -36,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         SharedPreferences sp= getApplicationContext().getSharedPreferences("User", Context.MODE_PRIVATE);
         String gece = sp.getString("gece","a");
         String gunduz = sp.getString("gunduz","b");
@@ -66,9 +71,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     BottomNavigationView.OnNavigationItemSelectedListener navlistener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment selectedFragment = null;
+            Vibrator v= (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                v.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.EFFECT_TICK));
+            } else {
+                v.vibrate(50);
+            }
             switch (item.getItemId()) {
                 case R.id.fisrtFragment:
                     selectedFragment = new ListFragment();

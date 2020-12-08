@@ -111,6 +111,9 @@ public class EditActivity extends AppCompatActivity {
             public void onClick(View v) {
                 text = editText.getText().toString();
                 detail = editTextMulti.getText().toString();
+                adres1 = adres1.substring(0, 1).toLowerCase() + adres1.substring(1);
+                city = city.substring(0, 1).toLowerCase() + city.substring(1);
+                sehir = sehir.substring(0, 1).toLowerCase() + sehir.substring(1);
                 KonumModel konumModelD = new KonumModel(konum1, konum2, text, detail, resim, gelen, adres1, adres2, sehir, auth.getCurrentUser().getUid(),false,city);
                 text = editText.getText().toString();
                 detail = editTextMulti.getText().toString();
@@ -200,6 +203,9 @@ public class EditActivity extends AppCompatActivity {
                             public void onSuccess(Uri uri) {
                                 resim = String.valueOf(uri);
                                 System.out.println(resim);
+                                adres1 = adres1.substring(0, 1).toLowerCase() + adres1.substring(1);
+                                city = city.substring(0, 1).toLowerCase() + city.substring(1);
+                                sehir = sehir.substring(0, 1).toLowerCase() + sehir.substring(1);
                                 DatabaseReference reference3 = database.getReference("users").child(auth.getCurrentUser().getUid()).child("konumlar").child(gelen);
                                 reference = database.getReference("konumlar").child(gelen);
                                 KonumModel konumModelD = new KonumModel(konum1, konum2, text, detail, resim, gelen, adres1, adres2, sehir, auth.getCurrentUser().getUid(),false,city);

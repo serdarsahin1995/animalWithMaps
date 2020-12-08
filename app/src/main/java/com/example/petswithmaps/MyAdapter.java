@@ -37,9 +37,12 @@ public class MyAdapter extends FirebaseRecyclerAdapter<KonumModel, MyAdapter.myv
     @Override
     protected void onBindViewHolder(@NonNull myviewholder holder, int i, @NonNull KonumModel konumModel) {
         final int radius = 6,margin = 6;
+        String str=konumModel.getAdres1();
+        String out = str.substring(0, 1).toUpperCase() + str.substring(1);
+        System.out.println(out);
         holder.text.setText(konumModel.getText());
         holder.detail.setText(konumModel.getDetail());
-        holder.konum1.setText(konumModel.getAdres1());
+        holder.konum1.setText(out);
         holder.konum2.setText(konumModel.getAdres2());
         final Transformation transformation = new RoundedCornersTransformation(radius, margin);
         Picasso.get().load(konumModel.getResim()).transform(transformation).placeholder(R.drawable.progress_animation).into(holder.img1);
