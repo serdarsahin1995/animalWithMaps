@@ -127,17 +127,22 @@ public class FcmUtil {
 
     }
 
-    public void sendNotificationCommon(final Context context, final String title, final String message, List<String> adresList,String konum1,String konum2) {
+    public void sendNotificationCommon(final Context context, final String title, final String message, List<String> adresList,String konum1,String konum2,String adres,boolean denetle) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference("users");
+        String key;
         for (int i = 0; i <= adresList.size()-1; i++) {
             DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
             DatabaseReference databaseReference = rootRef.child("users").child(adresList.get(i));
             DatabaseReference databaseReference2 = rootRef.child("users").child(adresList.get(i)).child("bildirim").push();
+            key = databaseReference2.getKey();
             databaseReference2.child("title").setValue(title);
             databaseReference2.child("message").setValue(message);
             databaseReference2.child("konum1").setValue(konum1);
             databaseReference2.child("konum2").setValue(konum2);
+            databaseReference2.child("adres").setValue(adres);
+            databaseReference2.child("okundu").setValue(denetle);
+            databaseReference2.child("key").setValue(key);
             databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

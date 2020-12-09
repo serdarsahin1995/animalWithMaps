@@ -8,25 +8,32 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.example.petswithmaps.Activities.LoginActivity;
 import com.example.petswithmaps.Fragments.NotificationFragment;
 import com.example.petswithmaps.Fragments.MapFragment;
 import com.example.petswithmaps.Fragments.ListFragment;
 import com.example.petswithmaps.Fragments.ProfilFragment;
+import com.example.petswithmaps.Models.FcmModel;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
@@ -34,6 +41,11 @@ public class MainActivity extends AppCompatActivity {
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     public static Activity dur;
     int b,a;
+    DatabaseReference databaseReference;
+    FirebaseAuth auth = FirebaseAuth.getInstance();
+    FirebaseUser user = auth.getCurrentUser();
+    FcmModel fcmModel;
+    public static int bildirimCount =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        databaseReference = FirebaseDatabase.getInstance().getReference("users").child(user.getUid()).child("bildirim");
         SharedPreferences sp= getApplicationContext().getSharedPreferences("User", Context.MODE_PRIVATE);
         String gece = sp.getString("gece","a");
         String gunduz = sp.getString("gunduz","b");
@@ -56,9 +69,31 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("lann");
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
-        checkLocationPermission();
         BottomNavigationView btnNav = findViewById(R.id.bottomNavigationview);
         btnNav.setOnNavigationItemSelectedListener(navlistener);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot){
+                for(DataSnapshot d:snapshot.getChildren()){
+                    fcmModel = d.getValue(FcmModel.class);
+                    bildirimCount=0;
+                    if(!fcmModel.isOkundu()){
+                        bildirimCount++;
+                    }
+                        int menuItemId = btnNav.getMenu().getItem(2).getItemId();
+                        BadgeDrawable badge = btnNav.getOrCreateBadge(menuItemId);
+                        badge.setBackgroundColor(Color.rgb(0,155,121));
+                        badge.setNumber(bildirimCount);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+        checkLocationPermission();
+
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, new ListFragment()).commit();
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
             @Override

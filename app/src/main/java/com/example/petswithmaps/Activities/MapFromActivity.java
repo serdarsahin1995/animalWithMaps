@@ -145,9 +145,10 @@ public class MapFromActivity extends AppCompatActivity {
                 reference2.setValue(konumModelD);
                 reference.setValue(konumModelD);
                 MapFragment.fa.getActivity().finish();
+                adres1 = adres1.substring(0, 1).toUpperCase() + adres1.substring(1);
                 Intent intent = new Intent(MapFromActivity.this, MainActivity.class);
                 FcmUtil fcmUtil = new FcmUtil();
-                fcmUtil.sendNotificationCommon(MapFromActivity.this, "Selam", "Çevrenizde yeni bir duyuru var!", senduid,konum1,konum2);
+                fcmUtil.sendNotificationCommon(MapFromActivity.this, "Selam", adres1+" konumunda yeni bir duyuru var!", senduid,konum1,konum2,adres1,false);
                 startActivity(intent);
                 finish();
 
@@ -274,8 +275,9 @@ public class MapFromActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         reference.setValue(konumModelD);
+                                        adres1 = adres1.substring(0, 1).toUpperCase() + adres1.substring(1);
                                         FcmUtil fcmUtil = new FcmUtil();
-                                        fcmUtil.sendNotificationCommon(MapFromActivity.this, "Selam", "Çevrenizde yeni bir duyuru var!", senduid,konum1,konum2);
+                                        fcmUtil.sendNotificationCommon(MapFromActivity.this, "Selam", adres1+" konumunda yeni bir duyuru var!", senduid,konum1,konum2,adres1,false);
                                         MapFragment.fa.getActivity().finish();
                                         finish();
                                     }
