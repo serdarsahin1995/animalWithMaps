@@ -178,15 +178,16 @@ public class ListFragment extends Fragment {
             }
         });
         recView.setLayoutManager(new LinearLayoutManager(getContext()));
-        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
-
+                    duyuru.setVisibility(View.INVISIBLE);
                 }else {
                     duyuru.setText("Duyuru Yok");
                     duyuru.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.INVISIBLE);
+                    recView.setAdapter(adapter);
                 }
             }
 
@@ -333,11 +334,11 @@ public class ListFragment extends Fragment {
     }
 
     public void defaultLocation() {
-        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
-                    duyuru.setText("");
+                    duyuru.setVisibility(View.INVISIBLE);
                 }else {
                     duyuru.setText("Duyuru Yok");
                     duyuru.setVisibility(View.VISIBLE);
@@ -361,7 +362,7 @@ public class ListFragment extends Fragment {
 
     public void customLocation() {
         DatabaseReference reference2 = database.getReference().child("users").child(auth.getCurrentUser().getUid()).child("konumlar");
-        reference2.addListenerForSingleValueEvent(new ValueEventListener() {
+        reference2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){

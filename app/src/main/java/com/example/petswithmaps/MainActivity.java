@@ -40,12 +40,13 @@ import com.google.firebase.iid.InstanceIdResult;
 public class MainActivity extends AppCompatActivity {
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     public static Activity dur;
-    int b,a;
+    int b, a;
     DatabaseReference databaseReference;
     FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseUser user = auth.getCurrentUser();
     FcmModel fcmModel;
-    public static int bildirimCount =0;
+    public static int bildirimCount;
+    public static BadgeDrawable badge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,36 +55,39 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("users").child(user.getUid()).child("bildirim");
-        SharedPreferences sp= getApplicationContext().getSharedPreferences("User", Context.MODE_PRIVATE);
-        String gece = sp.getString("gece","a");
-        String gunduz = sp.getString("gunduz","b");
-        if(!gunduz.equals("b")){
+        SharedPreferences sp = getApplicationContext().getSharedPreferences("User", Context.MODE_PRIVATE);
+        String gece = sp.getString("gece", "a");
+        String gunduz = sp.getString("gunduz", "b");
+        if (!gunduz.equals("b")) {
             a = Integer.parseInt(gunduz);
-        }
-        else if(!gece.equals("a")){
+        } else if (!gece.equals("a")) {
             b = Integer.parseInt(gece);
         }
-        if(b==1){
+        if (b == 1) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }else if(a==2){
+        } else if (a == 2) {
             System.out.println("lann");
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
         BottomNavigationView btnNav = findViewById(R.id.bottomNavigationview);
         btnNav.setOnNavigationItemSelectedListener(navlistener);
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot){
-                for(DataSnapshot d:snapshot.getChildren()){
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot d : snapshot.getChildren()) {
                     fcmModel = d.getValue(FcmModel.class);
                     bildirimCount=0;
-                    if(!fcmModel.isOkundu()){
+                    if (!fcmModel.isOkundu()) {
                         bildirimCount++;
                     }
-                        int menuItemId = btnNav.getMenu().getItem(2).getItemId();
-                        BadgeDrawable badge = btnNav.getOrCreateBadge(menuItemId);
-                        badge.setBackgroundColor(Color.rgb(0,155,121));
-                        badge.setNumber(bildirimCount);
+                    int menuItemId = btnNav.getMenu().getItem(2).getItemId();
+                    badge = btnNav.getOrCreateBadge(menuItemId);
+                    badge.setBackgroundColor(Color.rgb(0, 155, 121));
+                    badge.setVisible(true);
+                    if (bildirimCount == 0) {
+                        badge.setVisible(false);
+                    }
                 }
 
             }
@@ -93,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         checkLocationPermission();
-
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, new ListFragment()).commit();
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
             @Override
@@ -110,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment selectedFragment = null;
-            Vibrator v= (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 v.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.EFFECT_TICK));
             } else {
@@ -177,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
     @Override
     protected void onResume() {
         super.onResume();
